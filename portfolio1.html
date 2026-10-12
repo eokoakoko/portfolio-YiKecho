@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- ① 浏览器标签页上显示的标题，WangYike·Portfolio -->
+<title>王译可· 作品集</title>
+<style>
+/* 主打作品卡片 */
+.featured-work {
+  display: grid;
+  grid-template-columns: 1.15fr 1fr;
+  gap: 2rem;
+  align-items: center;
+  color: inherit;
+  text-decoration: none;
+}
+
+.work-cover {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 300px;
+  padding: 1.5rem;
+  overflow: hidden;
+  color: #f7f5f0;
+  background:
+    radial-gradient(ellipse at 80% 20%, #536b82 0%, transparent 42%),
+    linear-gradient(145deg, #182c3b, #263c49 55%, #a18b71);
+  transition: transform .3s ease;
+}
+
+.featured-work:hover .work-cover {
+  transform: translateY(-5px);
+}
+
+.cover-top {
+  font-size: .7rem;
+  letter-spacing: .16em;
+  opacity: .8;
+}
+
+.cover-title {
+  font-family: "Songti SC", "Noto Serif SC", serif;
+  font-size: clamp(2.5rem, 6vw, 4.5rem);
+  font-weight: 500;
+  letter-spacing: .08em;
+  line-height: 1.2;
+}
+
+.cover-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: .75rem;
+  letter-spacing: .08em;
+}
+
+.work-info .work-index {
+  color: var(--accent);
+  font-size: .75rem;
+  letter-spacing: .15em;
+}
+
+.work-info h3 {
+  margin: .7rem 0;
+  font-family: "Songti SC", "Noto Serif SC", serif;
+  font-size: 1.7rem;
+  font-weight: 500;
+}
+
+.work-info p {
+  color: var(--soft);
+  font-size: .95rem;
+  line-height: 1.9;
+}
+
+.work-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .5rem;
+  margin-top: 1.2rem;
+}
+
+.work-tags span {
+  border: 1px solid #d9d5cc;
+  border-radius: 999px;
+  padding: .25rem .65rem;
+  color: var(--soft);
+  font-size: .72rem;
+}
+
+@media (max-width: 600px) {
+  .featured-work {
+    grid-template-columns: 1fr;
+    gap: 1.2rem;
+  }
+
+  .work-cover {
+    min-height: 260px;
+  }
+}
+
+/* 项目详情 */
+.project-detail {
+  margin-top: 8vh;
+  padding: 5vh 0;
+  border-top: 1px solid #d9d5cc;
+}
+
+.project-detail h2 {
+  font-family: "Songti SC", "Noto Serif SC", serif;
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 500;
+}
+
+.case-block {
+  max-width: 680px;
+  margin-top: 3rem;
+}
+
+.case-label {
+  margin-bottom: .8rem;
+  color: var(--accent);
+  font-size: .72rem;
+  letter-spacing: .14em;
+}
+
+.case-block h3 {
+  margin-bottom: .8rem;
+  font-size: 1.1rem;
+}
+
+.case-block p:last-child {
+  color: var(--soft);
+  line-height: 1.9;
+}
+
+.case-link {
+  display: inline-block;
+  margin-top: 2.5rem;
+  padding-bottom: .35rem;
+  color: var(--accent);
+  text-decoration: none;
+  border-bottom: 1px solid var(--accent);
+}
+
+
+  /* ② 颜色集中放在这里：改这几个值，整个网站的配色就变了 */
+  :root {
+    --bg: #f7f5f0;      /* 背景 */
+    --ink: #23241f;     /* 文字 */
+    --soft: #77736b;    /* 次要文字 */
+    --accent: #a44732;  /* 强调色（链接、悬停） */
+  }
+
+  * { box-sizing: border-box; margin: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: "PingFang SC", "Microsoft YaHei", system-ui, sans-serif;
+    line-height: 1.8;
+    padding: 0 7vw;
+  }
+
+  header, section, footer { max-width: 1000px; margin: 0 auto; }
+
+/* 玻璃导航栏 */
+.site-nav {
+  position: sticky;
+  top: 16px;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 12px 18px;
+
+  background: rgba(247, 245, 240, 0.72);
+  backdrop-filter: blur(18px) saturate(150%);
+  -webkit-backdrop-filter: blur(18px) saturate(150%);
+
+  border: 1px solid rgba(255, 255, 255, 0.75);
+  border-radius: 999px;
+  box-shadow: 0 4px 24px rgba(36, 35, 31, 0.06);
+}
+
+.nav-brand {
+  color: var(--ink);
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+}
+
+.nav-links a {
+  color: var(--soft);
+  font-size: 0.82rem;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.nav-links a:hover {
+  color: var(--accent);
+}
+
+/* 手机屏幕适配 */
+@media (max-width: 480px) {
+  .site-nav {
+    padding: 11px 14px;
+  }
+
+  .nav-links {
+    gap: 12px;
+  }
+
+  .nav-links a {
+    font-size: 0.75rem;
+  }
+}
+
+
+  /* ③ 首屏：名字就是主视觉，字号大一点 */
+  header { padding: 18vh 0 12vh; }
+  
+h1 {
+  font-family: "Songti SC", "Noto Serif SC", serif;
+  font-size: clamp(3.5rem, 10vw, 7rem);
+  font-weight: 600;
+  letter-spacing: -0.045em;
+  line-height: 1.08;
+}
+
+.intro {
+  margin-top: 1.8rem;
+  max-width: 32em;
+  color: var(--soft);
+  font-size: 1.05rem;
+  line-height: 1.9;
+}
+
+.eyebrow {
+  margin-bottom: 1.5rem;
+  color: var(--accent);
+  font-size: 0.75rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.hero-meta {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 3rem;
+  color: var(--soft);
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+}
+
+.hero-meta::before {
+  content: "";
+  width: 42px;
+  height: 1px;
+  background: var(--accent);
+}
+
+
+  h2 { font-size: 1.3rem; margin-bottom: 1.5rem; }
+  section { padding: 6vh 0; }
+
+  /* ④ 作品网格：自动按屏幕宽度排列，手机上会变成一列 */
+  .works {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1.5rem;
+  }
+  .work { display: block; color: inherit; text-decoration: none; }
+  .work .cover {
+    aspect-ratio: 4 / 3;
+    background: #cfd5e3;   /* 先用色块占位，之后换成你的图片 */
+    border-radius: 6px;
+    transition: transform .2s;
+  }
+  .work:hover .cover { transform: translateY(-4px); }
+  .work h3 { margin-top: .8rem; font-size: 1.05rem; }
+  .work p { color: var(--soft); font-size: .95rem; }
+
+  a { color: var(--accent); }
+  footer { padding: 6vh 0 10vh; color: var(--soft); }
+
+
+.contact-info {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 24px;
+  max-width: 1400px;
+  margin: 24px auto 0;
+}
+
+.contact-info p {
+  margin: 0;
+}
+
+.contact-info p:first-child {
+  justify-self: start;
+}
+
+.contact-info p:nth-child(2) {
+  justify-self: center;
+}
+
+.contact-info p:last-child {
+  justify-self: end;
+}
+
+@media (max-width: 700px) {
+  .contact-info {
+    grid-template-columns: 1fr;
+    gap: 16px;
+    justify-items: center;
+  }
+
+  .contact-info p:first-child,
+  .contact-info p:nth-child(2),
+  .contact-info p:last-child {
+    justify-self: center;
+  }
+}
+
+/* 关于我：桌面双栏，手机单栏 */
+.about-section {
+  display: grid;
+  grid-template-columns: minmax(180px, 0.75fr) minmax(0, 1.25fr);
+  gap: clamp(2rem, 6vw, 6rem);
+  align-items: start;
+}
+
+.about-heading h2 {
+  margin-bottom: 0.8rem;
+  font-size: clamp(2rem, 3.5vw, 3rem);
+  line-height: 1.2;
+}
+
+.about-heading p {
+  color: var(--accent);
+  font-size: clamp(0.75rem, 1vw, 0.9rem);
+  letter-spacing: 0.12em;
+  line-height: 1.8;
+}
+
+@media (max-width: 600px) {
+  .about-heading h2 {
+    font-size: 2.2rem;
+  }
+
+  .about-heading p {
+    font-size: 0.75rem;
+  }
+}
+
+.about-content {
+  max-width: 100%;
+  min-width: 0;
+}
+
+.about-content p {
+  margin: 0 0 1rem;
+  font-size: clamp(1rem, 1.1vw, 1.1rem);
+  line-height: 2;
+  letter-spacing: 0.01em;
+  overflow-wrap: break-word;
+}
+
+.about-content p:last-child {
+  margin-bottom: 0;
+}
+
+@media (max-width: 600px) {
+  .about-section {
+    grid-template-columns: 1fr;
+    gap: 1.2rem;
+  }
+
+  .about-content p {
+    font-size: 1rem;
+    line-height: 1.9;
+  }
+}
+</style>
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<nav class="site-nav">
+  <a class="nav-brand" href="#top"></a>
+
+  <div class="nav-links">
+    <a href="#works">作品</a>
+    <a href="#about">关于</a>
+    <a href="#contact">联系</a>
+  </div>
+</nav>
+
+<!-- ⑤ 首屏：一句话说清你是谁、做什么 -->
+<header id="top">
+  <p class="eyebrow">PORTFOLIO · 2026—2027</p>
+
+  <h1>王译可<br>的创作世界.</h1>
+
+  <p class="intro">
+    播音与主持艺术专业学生，探索影像叙事、声音表达与数字创作。
+    在不同媒介之间寻找表达的可能，让想法成为可以被看见、听见的作品。
+  </p>
+
+  <div class="hero-meta">
+    <span>VIDEO</span>
+    <span>VOICE</span>
+    <span>CREATIVE TECHNOLOGY</span>
+  </div>
+</header>
+
+
+<!-- ⑥ 作品区：每个 <a class="work"> 是一个作品，复制粘贴就能增加 -->
+
+<section id="works">
+  <h2>精选作品 Selected Work</h2>
+
+
+  <a class="featured-work" href="not-alone.html">
+      <div class="work-cover cover-not-alone">
+      <div class="cover-top">SOCIAL MEDIA · CONTENT STRATEGY</div>
+      <div class="cover-title">Not Alone<br>魔法学院</div>
+      <div class="cover-bottom">
+        <span>SOCIAL MEDIA CONTENT</span>
+        <span>2024</span>
+      </div>
+    </div>
+
+    <div class="work-info">
+      <p class="work-index">01 / SOCIAL MEDIA</p>
+      <h3>Not Alone｜社交媒体内容运营</h3>
+      <p>
+        围绕「魔法学院」系列内容，参与社交媒体选题与文案创作，
+        探索系列化表达如何建立品牌个性，并与受众产生连接。
+      </p>
+      <div class="work-tags">
+        <span>内容策划</span>
+        <span>社交媒体运营</span>
+        <span>文案创作</span>
+        <span>系列化内容</span>
+      </div>
+      <p style="margin-top: 1.2rem; color: var(--accent);">
+        查看项目详情 ↗
+      </p>
+    </div>
+  </a>
+
+  <a class="featured-work" href="social-listening.html">
+    <div class="work-cover cover-social-listening">
+      <div class="cover-top">SOCIAL LISTENING · RESEARCH</div>
+      <div class="cover-title">洞察<br>与策略</div>
+      <div class="cover-bottom">
+        <span>COMPETITIVE ANALYSIS</span>
+        <span>2026</span>
+      </div>
+    </div>
+
+    <div class="work-info">
+      <p class="work-index">02 / RESEARCH & STRATEGY</p>
+      <h3>Social Listening & Competitive Analysis</h3>
+      <p>
+        从社交媒体信息与竞品表现出发，梳理研究思路与分析流程，
+        将观察转化为内容洞察，为后续策略思考提供依据。
+      </p>
+      <div class="work-tags">
+        <span>Social Listening</span>
+        <span>竞品分析</span>
+        <span>洞察提炼</span>
+        <span>Workflow</span>
+      </div>
+      <p style="margin-top: 1.2rem; color: var(--accent);">
+        查看项目详情 ↗
+      </p>
+    </div>
+  </a>
+
+  <a class="featured-work" href="nanjing.html">
+    <div class="work-cover cover-nanjing">
+      <div class="cover-top">NANJING · CITY DOCUMENTARY</div>
+
+      <div class="cover-title">南京<br>体温</div>
+
+      <div class="cover-bottom">
+        <span>AI × HUMAN STORIES</span>
+        <span>2026</span>
+      </div>
+    </div>
+
+    <div class="work-info">
+      <p class="work-index">03 / FEATURED PROJECT</p>
+
+      <h3>《南京体温》</h3>
+
+      <p>
+        以城市中普通人的生活为切口，
+        从殷巷的零工群体到小西湖的老街居民，
+        用两条叙事线索，讲述一座城市的温度。
+      </p>
+
+      <div class="work-tags">
+        <span>AI 视频生成</span>
+        <span>创意策划</span>
+        <span>脚本与分镜</span>
+        <span>视频剪辑</span>
+      </div>
+
+      <p style="margin-top: 1.2rem; color: var(--accent);">
+        查看项目详情 ↗
+      </p>
+    </div>
+  </a>
+
+<a class="featured-work" href="ronghua.html">
+    <div class="work-cover cover-ronghua">
+    <div class="cover-top">CHINESE CULTURE · DOCUMENTARY</div>
+    <div class="cover-title">绒花<br>与文化</div>
+    <div class="cover-bottom">
+      <span>CULTURE × STORYTELLING</span>
+      <span>2025</span>
+    </div>
+  </div>
+
+  <div class="work-info">
+    <p class="work-index">04 / VIDEO PROJECT</p>
+    <h3>《绒花》</h3>
+    <p>
+      以南京绒花为切口，从此岸取向、关系本位与团体主义三个角度，
+      探索传统手工艺背后的中国文化观念。
+    </p>
+    <div class="work-tags">
+      <span>选题策划</span>
+      <span>脚本与文案</span>
+      <span>拍摄与剪辑</span>
+      <span>配音</span>
+    </div>
+    <p style="margin-top: 1.2rem; color: var(--accent);">
+      查看项目详情 ↗
+    </p>
+  </div>
+</a>
+  
+
+  <a class="featured-work" href="nanjing-guide.html">
+    <div class="work-cover cover-jinling">
+      <div class="cover-top">NANJING · CULTURAL PRESENTATION</div>
+      <div class="cover-title">漫游<br>金陵</div>
+      <div class="cover-bottom">
+        <span>AI-ASSISTED VIDEO</span>
+        <span>2026</span>
+      </div>
+    </div>
+
+    <div class="work-info">
+      <p class="work-index">05 / GROUP PROJECT</p>
+      <h3>《场馆解说十六分之一小分队》</h3>
+      <p>
+        以创意情节串联颐和路、大报恩寺与十里秦淮，
+        将真人出镜讲解与 AI 辅助视频表达结合，
+        展现南京的历史文化与城市风貌。
+      </p>
+      <div class="work-tags">
+        <span>真人出镜</span>
+        <span>文案创意</span>
+        <span>视频剪辑</span>
+        <span>AI 辅助创作</span>
+      </div>
+      <p style="margin-top: 1.2rem; color: var(--accent);">
+        查看项目详情 ↗
+      </p>
+    </div>
+  </a>
+
+
+</section>
+
+
+<!-- ⑦ 关于我 -->
+<section id="about" class="about-section">
+  <div class="about-heading">
+    <h2>关于我</h2>
+    <p>ABOUT ME · CONTENT &amp; CREATIVE</p>
+  </div>
+
+  <div class="about-content">
+    <p>
+      我是一名播音与传播艺术专业的学生，关注内容创作、社交媒体传播与数字技术之间的连接。
+    </p>
+    <p>
+      从社交媒体内容策划、文案撰写与竞品分析，到影像叙事、声音表达和 AI 辅助创作，我尝试在不同的项目中理解内容如何被生产、传播，并与受众建立联系。
+    </p>
+    <p>
+      我希望持续探索创意与策略的结合，将观察转化为洞察，将想法落实为有价值的内容。
+    </p>
+  </div>
+</section>
+
+<!-- ⑧ 联系方式：把邮箱换成你的 -->
+
+<footer id="contact">
+  <p class="eyebrow">GET IN TOUCH</p>
+  <h2>期待与你交流。</h2>
+
+  <div class="contact-info">
+    <p>如果你对我的作品感兴趣，欢迎联系我。</p>
+    <p>Email：misscarkk127@163.com</p>
+    <p>Phone：+86 18180788009</p>
+  </div>
+</footer>
+
+
+</body>
+</html>

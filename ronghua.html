@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- ① 浏览器标签页上显示的标题，WangYike·Portfolio -->
+<title>绒花 · 影像创作 | 王译可的作品集</title>
+<style>
+/* 主打作品卡片 */
+.featured-work {
+  display: grid;
+  grid-template-columns: 1.15fr 1fr;
+  gap: 2rem;
+  align-items: center;
+  color: inherit;
+  text-decoration: none;
+}
+
+.work-cover {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 300px;
+  padding: 1.5rem;
+  overflow: hidden;
+  color: #f7f5f0;
+  background:
+    radial-gradient(ellipse at 80% 20%, #536b82 0%, transparent 42%),
+    linear-gradient(145deg, #182c3b, #263c49 55%, #a18b71);
+  transition: transform .3s ease;
+}
+
+.featured-work:hover .work-cover {
+  transform: translateY(-5px);
+}
+
+.cover-top {
+  font-size: .7rem;
+  letter-spacing: .16em;
+  opacity: .8;
+}
+
+.cover-title {
+  font-family: "Songti SC", "Noto Serif SC", serif;
+  font-size: clamp(2.5rem, 6vw, 4.5rem);
+  font-weight: 500;
+  letter-spacing: .08em;
+  line-height: 1.2;
+}
+
+.cover-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: .75rem;
+  letter-spacing: .08em;
+}
+
+.work-info .work-index {
+  color: var(--accent);
+  font-size: .75rem;
+  letter-spacing: .15em;
+}
+
+.work-info h3 {
+  margin: .7rem 0;
+  font-family: "Songti SC", "Noto Serif SC", serif;
+  font-size: 1.7rem;
+  font-weight: 500;
+}
+
+.work-info p {
+  color: var(--soft);
+  font-size: .95rem;
+  line-height: 1.9;
+}
+
+.work-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .5rem;
+  margin-top: 1.2rem;
+}
+
+.work-tags span {
+  border: 1px solid #d9d5cc;
+  border-radius: 999px;
+  padding: .25rem .65rem;
+  color: var(--soft);
+  font-size: .72rem;
+}
+
+@media (max-width: 600px) {
+  .featured-work {
+    grid-template-columns: 1fr;
+    gap: 1.2rem;
+  }
+
+  .work-cover {
+    min-height: 260px;
+  }
+}
+
+/* 项目详情 */
+.project-detail {
+  margin-top: 8vh;
+  padding: 5vh 0;
+  border-top: 1px solid #d9d5cc;
+}
+
+.project-detail h2 {
+  font-family: "Songti SC", "Noto Serif SC", serif;
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 500;
+}
+
+.case-block {
+  max-width: 680px;
+  margin-top: 3rem;
+}
+
+.case-label {
+  margin-bottom: .8rem;
+  color: var(--accent);
+  font-size: .72rem;
+  letter-spacing: .14em;
+}
+
+.case-block h3 {
+  margin-bottom: .8rem;
+  font-size: 1.1rem;
+}
+
+.case-block p:last-child {
+  color: var(--soft);
+  line-height: 1.9;
+}
+
+.case-link {
+  display: inline-block;
+  margin-top: 2.5rem;
+  padding-bottom: .35rem;
+  color: var(--accent);
+  text-decoration: none;
+}
+
+
+  /* ② 颜色集中放在这里：改这几个值，整个网站的配色就变了 */
+  :root {
+    --bg: #f7f5f0;      /* 背景 */
+    --ink: #23241f;     /* 文字 */
+    --soft: #77736b;    /* 次要文字 */
+    --accent: #a44732;  /* 强调色（链接、悬停） */
+  }
+
+  * { box-sizing: border-box; margin: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: "PingFang SC", "Microsoft YaHei", system-ui, sans-serif;
+    line-height: 1.8;
+    padding: 0 7vw;
+  }
+
+  header, section, footer { max-width: 1000px; margin: 0 auto; }
+
+/* 玻璃导航栏 */
+.site-nav {
+  position: sticky;
+  top: 16px;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 12px 18px;
+
+  background: rgba(247, 245, 240, 0.72);
+  backdrop-filter: blur(18px) saturate(150%);
+  -webkit-backdrop-filter: blur(18px) saturate(150%);
+
+  border: 1px solid rgba(255, 255, 255, 0.75);
+  border-radius: 999px;
+  box-shadow: 0 4px 24px rgba(36, 35, 31, 0.06);
+}
+
+.nav-brand {
+  color: var(--ink);
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+}
+
+.nav-links a {
+  color: var(--soft);
+  font-size: 0.82rem;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.nav-links a:hover {
+  color: var(--accent);
+}
+
+/* 手机屏幕适配 */
+@media (max-width: 480px) {
+  .site-nav {
+    padding: 11px 14px;
+  }
+
+  .nav-links {
+    gap: 12px;
+  }
+
+  .nav-links a {
+    font-size: 0.75rem;
+  }
+}
+
+
+  /* ③ 首屏：名字就是主视觉，字号大一点 */
+  header { padding: 18vh 0 12vh; }
+  
+h1 {
+  font-family: "Songti SC", "Noto Serif SC", serif;
+  font-size: clamp(3.5rem, 10vw, 7rem);
+  font-weight: 600;
+  letter-spacing: -0.045em;
+  line-height: 1.08;
+}
+
+.intro {
+  margin-top: 1.8rem;
+  max-width: 32em;
+  color: var(--soft);
+  font-size: 1.05rem;
+  line-height: 1.9;
+}
+
+.eyebrow {
+  margin-bottom: 1.5rem;
+  color: var(--accent);
+  font-size: 0.75rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.hero-meta {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 3rem;
+  color: var(--soft);
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+}
+
+.hero-meta::before {
+  content: "";
+  width: 42px;
+  height: 1px;
+  background: var(--accent);
+}
+
+
+  h2 { font-size: 1.3rem; margin-bottom: 1.5rem; }
+  section { padding: 6vh 0; }
+
+  /* ④ 作品网格：自动按屏幕宽度排列，手机上会变成一列 */
+  .works {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1.5rem;
+  }
+  .work { display: block; color: inherit; text-decoration: none; }
+  .work .cover {
+    aspect-ratio: 4 / 3;
+    background: #cfd5e3;   /* 先用色块占位，之后换成你的图片 */
+    border-radius: 6px;
+    transition: transform .2s;
+  }
+  .work:hover .cover { transform: translateY(-4px); }
+  .work h3 { margin-top: .8rem; font-size: 1.05rem; }
+  .work p { color: var(--soft); font-size: .95rem; }
+
+  a { color: var(--accent); }
+  footer { padding: 6vh 0 10vh; color: var(--soft); }
+
+
+.contact-info {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 24px;
+  max-width: 1400px;
+  margin: 24px auto 0;
+}
+
+.contact-info p {
+  margin: 0;
+}
+
+.contact-info p:first-child {
+  justify-self: start;
+}
+
+.contact-info p:nth-child(2) {
+  justify-self: center;
+}
+
+.contact-info p:last-child {
+  justify-self: end;
+}
+
+@media (max-width: 700px) {
+  .contact-info {
+    grid-template-columns: 1fr;
+    gap: 16px;
+    justify-items: center;
+  }
+
+  .contact-info p:first-child,
+  .contact-info p:nth-child(2),
+  .contact-info p:last-child {
+    justify-self: center;
+  }
+}
+
+.back-home {
+  display: block;
+  width: calc(100% - 48px);
+  max-width: 1600px;
+  margin: 32px auto 0;
+  color: var(--accent);
+  text-decoration: none;
+  font-size: 15px;
+  letter-spacing: 0.5px;
+  transition: opacity 0.25s ease;
+}
+
+.back-home:hover {
+  opacity: 0.65;
+  text-decoration: underline;
+  text-underline-offset: 5px;
+}
+
+
+.case-link {
+  text-decoration: none !important;
+  transition: opacity 0.25s ease;
+}
+
+.case-link:hover {
+  opacity: 0.65;
+  text-decoration: underline !important;
+  text-underline-offset: 5px;
+}
+
+/* 项目之间的前后导航 */
+.project-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  max-width: 1000px;
+  margin: 32px auto 0;
+  padding: 24px 0;
+  border-top: 1px solid #d9d5cc;
+}
+
+.project-nav a {
+  color: var(--accent);
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: opacity 0.25s ease;
+}
+
+.project-nav a:hover {
+  opacity: 0.65;
+  text-decoration: underline;
+  text-underline-offset: 5px;
+}
+
+@media (max-width: 480px) {
+  .project-nav a {
+    font-size: 0.8rem;
+  }
+}
+
+</style>
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<nav class="site-nav">
+  <a class="nav-brand" href="#top"></a>
+
+  <div class="nav-links">
+    <a href="portfolio1.html#works">作品</a>
+    <a href="portfolio1.html#about">关于</a>
+    <a href="portfolio1.html#contact">联系</a>
+  </div>
+</nav>
+
+
+<header id="top">
+  <p class="eyebrow">CASE STUDY · 02 / VIDEO PROJECT</p>
+
+  <h1>绒花</h1>
+
+  <p class="intro">
+    一朵绒花，不只是手工艺的形态，
+    也藏着人与人、人与群体，以及人与现实世界的关系。
+    从南京绒花出发，尝试以影像为媒介，
+    探索传统手工艺背后的中国文化观念。
+  </p>
+
+  <div class="hero-meta">
+    <span>VISUAL STORYTELLING</span>
+    <span>CHINESE CULTURE</span>
+  </div>
+</header>
+
+<section class="project-detail">
+  <p class="case-label">PROJECT OVERVIEW</p>
+  <h2>项目概述</h2>
+
+  <div class="case-block">
+  <p class="case-label">PROJECT INTRODUCTION</p>
+  <h3>从传统手工艺，看见文化观念。</h3>
+  <p>
+    《绒花》以南京绒花为切口，尝试从传统手工艺的文化内涵出发，
+    探索此岸取向、关系本位与团体主义三个角度所体现的中国文化观念。
+    项目结合选题策划、脚本与文案、拍摄、剪辑和配音，
+    将抽象的文化议题转化为影像表达。
+  </p>
+</div>
+
+<div class="case-block">
+  <p class="case-label">01 — CREATIVE INSIGHT</p>
+  <h3>让手艺的过程，成为文化观念的注脚。</h3>
+  <p>
+    本项目以南京绒花的制作过程为影像主体，
+    结合清华大学方朝晖教授《中国文化的三个本体论》一文中
+    提出的三个中国文化预设——此岸取向、关系本位与团体主义，
+    尝试将传统手工艺的制作过程与文化理论建立联系。
+  </p>
+  <p>
+    创作并非单纯记录一项手工技艺，
+    而是以可见的制作过程承载抽象的文化概念，
+    通过影像将手工艺与对中国文化观念的思考联系起来。
+  </p>
+</div>
+
+  <div class="case-block">
+  <p class="case-label">02 — CREATIVE & PRODUCTION</p>
+  <h3>以真实的制作过程，串联文化叙事。</h3>
+  <p>
+    项目拍摄于南京民俗博物馆，以亲身体验绒花制作的过程作为叙事线索。
+    在博物馆师傅的指导下完成制作体验，并结合绒花作品特写、
+    博物馆环境空镜，以及一对母子观看绒花作品的画面，
+    构建由手艺体验延伸至文化思考的影像表达。
+  </p>
+  <p>
+    画面不局限于工艺本身，而是将制作过程、空间环境与人物观察交织起来，
+    配合关于此岸取向、关系本位与团体主义的旁白，
+    尝试让抽象的文化预设融入具体、可感知的视觉叙事。
+  </p>
+</div>
+
+  <div class="case-block">
+  <p class="case-label">03 — SCRIPT & NARRATIVE</p>
+  <h3>将抽象的文化理论，转化为可感知的影像叙事。</h3>
+  <p>
+    脚本以绒花制作过程为视觉主线，
+    将此岸取向、关系本位与团体主义三个文化预设融入旁白表达。
+    通过手工制作的具体过程与文化理论之间的联系，
+    让观众在观看绒花制作与作品的同时，理解叙事所探讨的文化观念。
+  </p>
+  <p>
+    在素材组织上，结合制作过程、绒花作品细节、博物馆环境空镜
+    与观众驻足观看的画面，使叙事从具体的手工艺延伸至文化思考，
+    让旁白与视觉内容共同推进主题表达。
+  </p>
+</div>
+
+  <div class="case-block">
+  <p class="case-label">04 — MY ROLE</p>
+  <h3>从选题构思，到影像成片。</h3>
+  <p>
+    独立完成项目的选题策划与脚本创作，
+    以南京绒花为切入点，梳理相关文化理论，
+    将此岸取向、关系本位与团体主义三个文化预设
+    转化为视频的叙事主题与文案表达。
+  </p>
+  <p>
+    前往南京民俗博物馆进行实地拍摄，
+    记录绒花制作过程、作品细节与博物馆环境，
+    并结合人物观察镜头完成素材组织。
+    后期独立完成视频剪辑与配音，
+    将文字、画面与声音整合为完整的影像作品。
+  </p>
+  <p>
+    <strong>负责环节：</strong>
+    选题策划 / 理论梳理 / 脚本与文案 / 实地拍摄 / 视频剪辑 / 配音
+  </p>
+</div>
+
+  
+<div class="case-block">
+  <p class="case-label">04 — FINAL FILM</p>
+  <h3>观看完整成片</h3>
+  <p>一朵绒花，一段文化记忆。</p>
+  <a
+    class="case-link"
+    href="https://www.bilibili.com/video/BV1b6H76sE6s/"
+    target="_blank"
+    rel="noopener noreferrer"
+  >
+    在 bilibili 观看完整成片 ↗
+  </a>
+</div>
+
+
+  
+</section>
+
+<footer id="contact">
+  <p class="eyebrow">GET IN TOUCH</p>
+  <h2>期待与你交流。</h2>
+
+  <div class="contact-info">
+    <p>如果你对我的作品感兴趣，欢迎联系我。</p>
+    <p>Email：misscarkk127@163.com</p>
+    <p>Phone：+86 18180788009</p>
+  </div>
+</footer>
+
+<nav class="project-nav" aria-label="项目导航">
+  <a href="nanjing.html">← 上一个项目</a>
+  <a href="nanjing-guide.html">查看下一个项目 →</a>
+</nav>
+
+</body>
+</html>

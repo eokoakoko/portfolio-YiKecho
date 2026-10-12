@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- ① 浏览器标签页上显示的标题，WangYike·Portfolio -->
+<title>Not Alone｜魔法学院 · 项目详情 | 王译可的作品集</title>
+<style>
+/* 主打作品卡片 */
+.featured-work {
+  display: grid
+  grid-template-columns: 1.15fr 1fr;
+  gap: 2rem;
+  align-items: center;
+  color: inherit;
+  text-decoration: none;
+}
+
+.work-cover {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 300px;
+  padding: 1.5rem;
+  overflow: hidden;
+  color: #f7f5f0;
+  background:
+    radial-gradient(ellipse at 80% 20%, #536b82 0%, transparent 42%),
+    linear-gradient(145deg, #182c3b, #263c49 55%, #a18b71);
+  transition: transform .3s ease;
+}
+
+.featured-work:hover .work-cover {
+  transform: translateY(-5px);
+}
+
+.cover-top {
+  font-size: .7rem;
+  letter-spacing: .16em;
+  opacity: .8;
+}
+
+.cover-title {
+  font-family: "Songti SC", "Noto Serif SC", serif;
+  font-size: clamp(2.5rem, 6vw, 4.5rem);
+  font-weight: 500;
+  letter-spacing: .08em;
+  line-height: 1.2;
+}
+
+.cover-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: .75rem;
+  letter-spacing: .08em;
+}
+
+.work-info .work-index {
+  color: var(--accent);
+  font-size: .75rem;
+  letter-spacing: .15em;
+}
+
+.work-info h3 {
+  margin: .7rem 0;
+  font-family: "Songti SC", "Noto Serif SC", serif;
+  font-size: 1.7rem;
+  font-weight: 500;
+}
+
+.work-info p {
+  color: var(--soft);
+  font-size: .95rem;
+  line-height: 1.9;
+}
+
+.work-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .5rem;
+  margin-top: 1.2rem;
+}
+
+.work-tags span {
+  border: 1px solid #d9d5cc;
+  border-radius: 999px;
+  padding: .25rem .65rem;
+  color: var(--soft);
+  font-size: .72rem;
+}
+
+@media (max-width: 600px) {
+  .featured-work {
+    grid-template-columns: 1fr;
+    gap: 1.2rem;
+  }
+
+  .work-cover {
+    min-height: 260px;
+  }
+}
+
+/* 项目详情 */
+.project-detail {
+  margin-top: 8vh;
+  padding: 5vh 0;
+  border-top: 1px solid #d9d5cc;
+}
+
+.project-detail h2 {
+  font-family: "Songti SC", "Noto Serif SC", serif;
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 500;
+}
+
+.case-block {
+  max-width: 680px;
+  margin-top: 3rem;
+}
+
+.case-label {
+  margin-bottom: .8rem;
+  color: var(--accent);
+  font-size: .72rem;
+  letter-spacing: .14em;
+}
+
+.case-block h3 {
+  margin-bottom: .8rem;
+  font-size: 1.1rem;
+}
+
+.case-block p:last-child {
+  color: var(--soft);
+  line-height: 1.9;
+}
+
+.case-link {
+  display: inline-block;
+  margin-top: 2.5rem;
+  padding-bottom: .35rem;
+  color: var(--accent);
+  text-decoration: none;
+}
+
+
+  /* ② 颜色集中放在这里：改这几个值，整个网站的配色就变了 */
+  :root {
+    --bg: #f7f5f0;      /* 背景 */
+    --ink: #23241f;     /* 文字 */
+    --soft: #77736b;    /* 次要文字 */
+    --accent: #a44732;  /* 强调色（链接、悬停） */
+  }
+
+  * { box-sizing: border-box; margin: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: "PingFang SC", "Microsoft YaHei", system-ui, sans-serif;
+    line-height: 1.8;
+    padding: 0 7vw;
+  }
+
+  header, section, footer { max-width: 1000px; margin: 0 auto; }
+
+/* 玻璃导航栏 */
+.site-nav {
+  position: sticky;
+  top: 16px;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 12px 18px;
+
+  background: rgba(247, 245, 240, 0.72);
+  backdrop-filter: blur(18px) saturate(150%);
+  -webkit-backdrop-filter: blur(18px) saturate(150%);
+
+  border: 1px solid rgba(255, 255, 255, 0.75);
+  border-radius: 999px;
+  box-shadow: 0 4px 24px rgba(36, 35, 31, 0.06);
+}
+
+.nav-brand {
+  color: var(--ink);
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+}
+
+.nav-links a {
+  color: var(--soft);
+  font-size: 0.82rem;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.nav-links a:hover {
+  color: var(--accent);
+}
+
+/* 手机屏幕适配 */
+@media (max-width: 480px) {
+  .site-nav {
+    padding: 11px 14px;
+  }
+
+  .nav-links {
+    gap: 12px;
+  }
+
+  .nav-links a {
+    font-size: 0.75rem;
+  }
+}
+
+
+  /* ③ 首屏：名字就是主视觉，字号大一点 */
+  header { padding: 18vh 0 12vh; }
+  
+h1 {
+  font-family: "Songti SC", "Noto Serif SC", serif;
+  font-size: clamp(3.5rem, 10vw, 7rem);
+  font-weight: 600;
+  letter-spacing: -0.045em;
+  line-height: 1.08;
+}
+
+.intro {
+  margin-top: 1.8rem;
+  max-width: 32em;
+  color: var(--soft);
+  font-size: 1.05rem;
+  line-height: 1.9;
+}
+
+.eyebrow {
+  margin-bottom: 1.5rem;
+  color: var(--accent);
+  font-size: 0.75rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.hero-meta {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 3rem;
+  color: var(--soft);
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+}
+
+.hero-meta::before {
+  content: "";
+  width: 42px;
+  height: 1px;
+  background: var(--accent);
+}
+
+
+  h2 { font-size: 1.3rem; margin-bottom: 1.5rem; }
+  section { padding: 6vh 0; }
+
+  /* ④ 作品网格：自动按屏幕宽度排列，手机上会变成一列 */
+  .works {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1.5rem;
+  }
+  .work { display: block; color: inherit; text-decoration: none; }
+  .work .cover {
+    aspect-ratio: 4 / 3;
+    background: #cfd5e3;   /* 先用色块占位，之后换成你的图片 */
+    border-radius: 6px;
+    transition: transform .2s;
+  }
+  .work:hover .cover { transform: translateY(-4px); }
+  .work h3 { margin-top: .8rem; font-size: 1.05rem; }
+  .work p { color: var(--soft); font-size: .95rem; }
+
+  a { color: var(--accent); }
+  footer { padding: 6vh 0 10vh; color: var(--soft); }
+
+
+.contact-info {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 24px;
+  max-width: 1400px;
+  margin: 24px auto 0;
+}
+
+.contact-info p {
+  margin: 0;
+}
+
+.contact-info p:first-child {
+  justify-self: start;
+}
+
+.contact-info p:nth-child(2) {
+  justify-self: center;
+}
+
+.contact-info p:last-child {
+  justify-self: end;
+}
+
+@media (max-width: 700px) {
+  .contact-info {
+    grid-template-columns: 1fr;
+    gap: 16px;
+    justify-items: center;
+  }
+
+  .contact-info p:first-child,
+  .contact-info p:nth-child(2),
+  .contact-info p:last-child {
+    justify-self: center;
+  }
+}
+
+.back-home {
+  display: block;
+  width: calc(100% - 48px);
+  max-width: 1600px;
+  margin: 32px auto 0;
+  color: var(--accent);
+  text-decoration: none;
+  font-size: 15px;
+  letter-spacing: 0.5px;
+  transition: opacity 0.25s ease;
+}
+
+.back-home:hover {
+  opacity: 0.65;
+  text-decoration: underline;
+  text-underline-offset: 5px;
+}
+
+
+.case-link {
+  text-decoration: none !important;
+  transition: opacity 0.25s ease;
+}
+
+.case-link:hover {
+  opacity: 0.65;
+  text-decoration: underline !important;
+  text-underline-offset: 5px;
+}
+
+/* 项目之间的前后导航 */
+.project-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  max-width: 1000px;
+  margin: 32px auto 0;
+  padding: 24px 0;
+  border-top: 1px solid #d9d5cc;
+}
+
+.project-nav a {
+  color: var(--accent);
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: opacity 0.25s ease;
+}
+
+.project-nav a:hover {
+  opacity: 0.65;
+  text-decoration: underline;
+  text-underline-offset: 5px;
+}
+
+@media (max-width: 480px) {
+  .project-nav a {
+    font-size: 0.8rem;
+  }
+}
+
+
+.xiaohongshu-gallery {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+  margin: 2rem 0 3rem;
+  align-items: start;
+}
+
+.xiaohongshu-gallery img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 4px;
+}
+
+@media (max-width: 700px) {
+  .xiaohongshu-gallery {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+}
+
+
+
+</style>
+ <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<nav class="site-nav">
+  <a class="nav-brand" href="#top"></a>
+
+  <div class="nav-links">
+    <a href="portfolio1.html#works">作品</a>
+    <a href="portfolio1.html#about">关于</a>
+    <a href="portfolio1.html#contact">联系</a>
+  </div>
+</nav>
+
+
+<header id="top">
+  <p class="eyebrow">CASE STUDY · 01 / 2024</p>
+
+<h1>魔法学院</h1>
+
+  <p class="intro">
+    以「魔法学院」为灵感，将宠物用品融入熟悉的文化符号与角色设定。
+    从小红书的轻量表达，到微信公众号的系列化图文，
+    我尝试用内容与视觉叙事，让产品不止于展示，也拥有自己的故事。
+  </p>
+
+  <div class="hero-meta">
+  <span>SOCIAL MEDIA</span>
+  <span>CONTENT CREATION</span>
+</div>
+</header>
+
+
+<section class="project-detail">
+  <p class="case-label">PROJECT OVERVIEW</p>
+  <h2>让产品，拥有自己的故事。</h2>
+
+  <div class="case-block">
+    <p class="case-label">PROJECT INTRODUCTION</p>
+    <h3>项目概述</h3>
+    <p>
+      「魔法学院」是 Not Alone 不孤岛围绕宠物用品展开的系列社交媒体内容。
+      项目以大众熟悉的魔法学院意象为灵感，将学院色彩、角色性格与宠物产品建立联系，
+      让产品不再只是单独的商品展示，而成为宠物个性表达的一部分。
+      项目覆盖小红书与微信公众号，我参与内容选题、文案创作、社媒发布及公众号图文编辑与排版。
+    </p>
+  </div>
+
+  <div class="case-block">
+    <p class="case-label">01 — CONTENT STRATEGY</p>
+    <h3>从文化符号，到产品设定，再到社媒内容</h3>
+    <p>
+      项目的内容思路围绕三个环节展开：先以熟悉的文化符号建立主题认知，
+      再将学院代表色与风格融入不同宠物用品的设定，
+      最后通过适合社交平台的文案与视觉表达，让产品进入一个更具代入感的故事场景。
+    </p>
+    <p>
+      系列以四大学院为主线，关联毛衣、领结、猫抓板与蜡烛造型宠物发声玩具等产品，
+      并延伸出「麻瓜粉」配色。统一的主题让不同产品之间形成关联，
+      也为后续内容创作提供了清晰的表达框架。
+    </p>
+  </div>
+
+  <div class="case-block">
+    <p class="case-label">02 — XIAOHONGSHU CONTENT</p>
+    <h3>让产品进入用户熟悉的语境</h3>
+    <p>
+      在小红书内容中，我围绕系列主题参与选题与文案创作，
+      将宠物拟人化表达、网络流行语境与产品特点结合，
+      以轻量、有趣且容易理解的方式呈现产品。
+      例如「嘿！我好像找到冠冕了」这样的表达，
+      将产品与学院故事联系起来，在传递产品信息的同时强化主题记忆点。
+    </p>
+  </div>
+
+
+ <div class="xiaohongshu-gallery">
+   <img src="images/not-alone-wisdom.jpg"
+       alt="智慧学院小红书笔记截图"
+       loading="lazy">
+
+   <img src="images/not-alone-friendly.jpg"
+       alt="友善学院小红书笔记截图"
+       loading="lazy">
+
+   <img src="images/not-alone-elegant.jpg"
+       alt="优雅学院小红书笔记截图"
+       loading="lazy">
+ </div>
+</div>
+
+  <div class="case-block">
+    <p class="case-label">03 — WECHAT CONTENT PRODUCTION</p>
+    <h3>从单条内容，到完整的系列叙事</h3>
+    <p>
+      相较于小红书更轻量、强调标题吸引力与社交语境的表达，
+      微信公众号更适合完整呈现系列主题与产品信息。
+      我参与公众号内容策划、文案创作，并使用秀米进行图文编辑与排版，
+      将主题引入、产品展示与系列内容串联起来，
+      通过清晰的信息层级与统一的视觉风格，提升整体阅读连贯性。
+    </p>
+  </div>
+
+  <div class="case-block">
+    <p class="case-label">04 — CONTENT TO VISUAL</p>
+    <h3>先梳理信息，再完成视觉表达</h3>
+    <p>
+      在内容落地过程中，我先根据平台属性与传播目的确定核心信息和内容层级，
+      再使用秀米完成公众号图文编辑与排版，并通过 Canva 辅助版式构思与视觉呈现。
+      根据内容调整字体、配色、留白与网格结构，
+      并反复检查标题与正文层级、图片比例、文字密度及对齐关系，
+      在保持系列视觉一致性的同时，确保信息清晰易读。
+    </p>
+  </div>
+
+  <div class="case-block">
+    <p class="case-label">05 — MY ROLE</p>
+    <h3>个人职责与实践</h3>
+    <p>
+      参与「魔法学院」系列的内容选题、文案创作与社媒发布；
+      负责微信公众号图文的秀米编辑与排版，以及内容上传发布。
+      在实践中，我尝试将文化符号转化为内容创意，
+      并结合不同平台的表达特点，完成从内容构思到视觉呈现的落地。
+    </p>
+  </div>
+
+  <div class="case-block">
+    <p class="case-label">06 — KEY TAKEAWAY</p>
+    <h3>内容不只是展示产品</h3>
+    <p>
+      对我而言，这个项目的关键在于建立产品与用户之间的叙事连接：
+      以统一的主题形成系列辨识度，以符合平台语境的内容拉近距离，
+      再通过有秩序的图文呈现，让创意真正落到用户能够阅读和理解的内容中。
+    </p>
+  </div>
+ 
+<div class="case-block">
+  <p class="case-label">FURTHER READING</p>
+  <h3>想进一步了解项目？</h3>
+  <p>如果你更喜欢以演示文稿的形式阅读完整分析，欢迎前往 Canva 查看项目展示。</p>
+  <a class="case-link"
+     href="https://khsj.cn/fhpa3s1xumb65zt"
+     target="_blank"
+     rel="noopener noreferrer">
+    在 Canva 查看完整项目展示 ↗
+  </a>
+</div>
+  
+</section>
+
+
+<footer id="contact">
+  <p class="eyebrow">GET IN TOUCH</p>
+  <h2>期待与你交流。</h2>
+  <div class="contact-info">
+    <p>如果你对我的作品感兴趣，欢迎联系我。</p>
+    <p>Email：misscarkk127@163.com</p>
+    <p>Phone：+86 18180788009</p>
+  </div>
+</footer>
+
+<nav class="project-nav" aria-label="项目导航">
+  <a href="portfolio1.html">← 返回作品集首页</a>
+  <a href="social-listening.html">查看下一个项目 →</a>
+</nav>
+</body>
+</html>

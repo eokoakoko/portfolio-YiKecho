@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- ① 浏览器标签页上显示的标题，WangYike·Portfolio -->
+<title>南京体温 · 项目详情 | 王译可的作品集</title>
+<style>
+/* 主打作品卡片 */
+.featured-work {
+  display: grid;
+  grid-template-columns: 1.15fr 1fr;
+  gap: 2rem;
+  align-items: center;
+  color: inherit;
+  text-decoration: none;
+}
+
+.work-cover {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 300px;
+  padding: 1.5rem;
+  overflow: hidden;
+  color: #f7f5f0;
+  background:
+    radial-gradient(ellipse at 80% 20%, #536b82 0%, transparent 42%),
+    linear-gradient(145deg, #182c3b, #263c49 55%, #a18b71);
+  transition: transform .3s ease;
+}
+
+.featured-work:hover .work-cover {
+  transform: translateY(-5px);
+}
+
+.cover-top {
+  font-size: .7rem;
+  letter-spacing: .16em;
+  opacity: .8;
+}
+
+.cover-title {
+  font-family: "Songti SC", "Noto Serif SC", serif;
+  font-size: clamp(2.5rem, 6vw, 4.5rem);
+  font-weight: 500;
+  letter-spacing: .08em;
+  line-height: 1.2;
+}
+
+.cover-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: .75rem;
+  letter-spacing: .08em;
+}
+
+.work-info .work-index {
+  color: var(--accent);
+  font-size: .75rem;
+  letter-spacing: .15em;
+}
+
+.work-info h3 {
+  margin: .7rem 0;
+  font-family: "Songti SC", "Noto Serif SC", serif;
+  font-size: 1.7rem;
+  font-weight: 500;
+}
+
+.work-info p {
+  color: var(--soft);
+  font-size: .95rem;
+  line-height: 1.9;
+}
+
+.work-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .5rem;
+  margin-top: 1.2rem;
+}
+
+.work-tags span {
+  border: 1px solid #d9d5cc;
+  border-radius: 999px;
+  padding: .25rem .65rem;
+  color: var(--soft);
+  font-size: .72rem;
+}
+
+@media (max-width: 600px) {
+  .featured-work {
+    grid-template-columns: 1fr;
+    gap: 1.2rem;
+  }
+
+  .work-cover {
+    min-height: 260px;
+  }
+}
+
+/* 项目详情 */
+.project-detail {
+  margin-top: 8vh;
+  padding: 5vh 0;
+  border-top: 1px solid #d9d5cc;
+}
+
+.project-detail h2 {
+  font-family: "Songti SC", "Noto Serif SC", serif;
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 500;
+}
+
+.case-block {
+  max-width: 680px;
+  margin-top: 3rem;
+}
+
+.case-label {
+  margin-bottom: .8rem;
+  color: var(--accent);
+  font-size: .72rem;
+  letter-spacing: .14em;
+}
+
+.case-block h3 {
+  margin-bottom: .8rem;
+  font-size: 1.1rem;
+}
+
+.case-block p:last-child {
+  color: var(--soft);
+  line-height: 1.9;
+}
+
+.case-link {
+  display: inline-block;
+  margin-top: 2.5rem;
+  padding-bottom: .35rem;
+  color: var(--accent);
+  text-decoration: none;
+}
+
+
+  /* ② 颜色集中放在这里：改这几个值，整个网站的配色就变了 */
+  :root {
+    --bg: #f7f5f0;      /* 背景 */
+    --ink: #23241f;     /* 文字 */
+    --soft: #77736b;    /* 次要文字 */
+    --accent: #a44732;  /* 强调色（链接、悬停） */
+  }
+
+  * { box-sizing: border-box; margin: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: "PingFang SC", "Microsoft YaHei", system-ui, sans-serif;
+    line-height: 1.8;
+    padding: 0 7vw;
+  }
+
+  header, section, footer { max-width: 1000px; margin: 0 auto; }
+
+/* 玻璃导航栏 */
+.site-nav {
+  position: sticky;
+  top: 16px;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 12px 18px;
+
+  background: rgba(247, 245, 240, 0.72);
+  backdrop-filter: blur(18px) saturate(150%);
+  -webkit-backdrop-filter: blur(18px) saturate(150%);
+
+  border: 1px solid rgba(255, 255, 255, 0.75);
+  border-radius: 999px;
+  box-shadow: 0 4px 24px rgba(36, 35, 31, 0.06);
+}
+
+.nav-brand {
+  color: var(--ink);
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+}
+
+.nav-links a {
+  color: var(--soft);
+  font-size: 0.82rem;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.nav-links a:hover {
+  color: var(--accent);
+}
+
+/* 手机屏幕适配 */
+@media (max-width: 480px) {
+  .site-nav {
+    padding: 11px 14px;
+  }
+
+  .nav-links {
+    gap: 12px;
+  }
+
+  .nav-links a {
+    font-size: 0.75rem;
+  }
+}
+
+
+  /* ③ 首屏：名字就是主视觉，字号大一点 */
+  header { padding: 18vh 0 12vh; }
+  
+h1 {
+  font-family: "Songti SC", "Noto Serif SC", serif;
+  font-size: clamp(3.5rem, 10vw, 7rem);
+  font-weight: 600;
+  letter-spacing: -0.045em;
+  line-height: 1.08;
+}
+
+.intro {
+  margin-top: 1.8rem;
+  max-width: 32em;
+  color: var(--soft);
+  font-size: 1.05rem;
+  line-height: 1.9;
+}
+
+.eyebrow {
+  margin-bottom: 1.5rem;
+  color: var(--accent);
+  font-size: 0.75rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.hero-meta {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 3rem;
+  color: var(--soft);
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+}
+
+.hero-meta::before {
+  content: "";
+  width: 42px;
+  height: 1px;
+  background: var(--accent);
+}
+
+
+  h2 { font-size: 1.3rem; margin-bottom: 1.5rem; }
+  section { padding: 6vh 0; }
+
+  /* ④ 作品网格：自动按屏幕宽度排列，手机上会变成一列 */
+  .works {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1.5rem;
+  }
+  .work { display: block; color: inherit; text-decoration: none; }
+  .work .cover {
+    aspect-ratio: 4 / 3;
+    background: #cfd5e3;   /* 先用色块占位，之后换成你的图片 */
+    border-radius: 6px;
+    transition: transform .2s;
+  }
+  .work:hover .cover { transform: translateY(-4px); }
+  .work h3 { margin-top: .8rem; font-size: 1.05rem; }
+  .work p { color: var(--soft); font-size: .95rem; }
+
+  a { color: var(--accent); }
+  footer { padding: 6vh 0 10vh; color: var(--soft); }
+
+
+.contact-info {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 24px;
+  max-width: 1400px;
+  margin: 24px auto 0;
+}
+
+.contact-info p {
+  margin: 0;
+}
+
+.contact-info p:first-child {
+  justify-self: start;
+}
+
+.contact-info p:nth-child(2) {
+  justify-self: center;
+}
+
+.contact-info p:last-child {
+  justify-self: end;
+}
+
+@media (max-width: 700px) {
+  .contact-info {
+    grid-template-columns: 1fr;
+    gap: 16px;
+    justify-items: center;
+  }
+
+  .contact-info p:first-child,
+  .contact-info p:nth-child(2),
+  .contact-info p:last-child {
+    justify-self: center;
+  }
+}
+
+.back-home {
+  display: block;
+  width: calc(100% - 48px);
+  max-width: 1600px;
+  margin: 32px auto 0;
+  color: var(--accent);
+  text-decoration: none;
+  font-size: 15px;
+  letter-spacing: 0.5px;
+  transition: opacity 0.25s ease;
+}
+
+.back-home:hover {
+  opacity: 0.65;
+  text-decoration: underline;
+  text-underline-offset: 5px;
+}
+
+
+.case-link {
+  text-decoration: none !important;
+  transition: opacity 0.25s ease;
+}
+
+.case-link:hover {
+  opacity: 0.65;
+  text-decoration: underline !important;
+  text-underline-offset: 5px;
+}
+
+/* 项目之间的前后导航 */
+.project-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  max-width: 1000px;
+  margin: 32px auto 0;
+  padding: 24px 0;
+  border-top: 1px solid #d9d5cc;
+}
+
+.project-nav a {
+  color: var(--accent);
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: opacity 0.25s ease;
+}
+
+.project-nav a:hover {
+  opacity: 0.65;
+  text-decoration: underline;
+  text-underline-offset: 5px;
+}
+
+@media (max-width: 480px) {
+  .project-nav a {
+    font-size: 0.8rem;
+  }
+}
+</style>
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<nav class="site-nav">
+  <a class="nav-brand" href="#top"></a>
+
+  <div class="nav-links">
+    <a href="portfolio1.html#works">作品</a>
+    <a href="portfolio1.html#about">关于</a>
+    <a href="portfolio1.html#contact">联系</a>
+  </div>
+</nav>
+
+
+<header id="top">
+  <p class="eyebrow">CASE STUDY · 01 / 2026</p>
+
+  <h1>南京体温</h1>
+
+  <p class="intro">
+    一座城市的温度，不只在它的历史与建筑里，
+    也在普通人的生活与选择里。
+    从清晨等待工作的务工者，到希望留在旧街区的居民，
+    我们试着用两条生活线索，讲述一座有体温的古城。
+  </p>
+
+  <div class="hero-meta">
+    <span>AI FILMMAKING</span>
+    <span>CITY DOCUMENTARY</span>
+  </div>
+</header>
+
+<section class="project-detail">
+  <p class="case-label">PROJECT OVERVIEW</p>
+  <h2>项目概述</h2>
+
+  <div class="case-block">
+    <p>
+      《南京体温》是一支城市文旅宣传片，以殷巷零工集散地
+      与老门东对面的小西湖微更新为切入点，
+      关注普通人的生存、尊严、归属与留下来的权利。
+    </p>
+  </div>
+
+  <div class="case-block">
+    <p class="case-label">01 — CREATIVE INSIGHT</p>
+    <h3>从两个微观切口，看见一座城市</h3>
+    <p>
+      一个是清晨等待工作机会的务工者，
+      一个是希望继续生活在熟悉街巷里的老居民。
+      两条看似不同的生活线索，最终汇聚到同一个问题：
+      一座城市，如何让来到这里的人安心生活，
+      也让生活在这里的人愿意留下。
+    </p>
+  </div>
+
+  <div class="case-block">
+    <p class="case-label">02 — CREATIVE & PRODUCTION</p>
+    <h3>让城市叙事回到人的生活</h3>
+    <p>
+      项目采用纪实人文摄影风格，以自然光、手持感与低饱和画面
+      呈现城市日常。前段以环境音建立现场感，
+      随着叙事推进，再让极简钢琴渐入，
+      使画面从观察日常逐步走向情绪表达。
+    </p>
+  </div>
+
+  <div class="case-block">
+    <p class="case-label">03 — AI WORKFLOW</p>
+    <h3>比较工具，让创意落地</h3>
+    <p>
+      围绕统一的画面风格设计 AI 视频生成提示词，
+      分别尝试即梦、可灵与小云雀，
+      对比不同平台的生成效果后，选择小云雀作为主要生成工具。
+      在 AI 生成画面的基础上，参与画面生成、
+      配音、音效设计、剪辑与最终成片审核。
+    </p>
+  </div>
+
+  <div class="case-block">
+    <p class="case-label">04 — MY ROLE</p>
+    <h3>个人职责与贡献</h3>
+    <p>
+      主导创意洞察与整体叙事方向，完成脚本撰写、
+      分镜设计与多平台 Prompt 编写；
+      参与 AI 画面生成、配音、音效设计、视频剪辑，
+      并负责最终成片审核。
+    </p>
+  </div>
+
+  <div class="case-block">
+    <p class="case-label">05 — FINAL FILM</p>
+    <h3>观看完整成片</h3>
+    <p>
+      一座有体温的古城。
+    </p>
+    <a
+      class="case-link"
+      href="https://b23.tv/bFXVbUn"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      在bilibili观看完整成片 ↗
+  
+  </a>
+  </div>
+
+  
+</section>
+
+<footer id="contact">
+  <p class="eyebrow">GET IN TOUCH</p>
+  <h2>期待与你交流。</h2>
+
+  <div class="contact-info">
+    <p>如果你对我的作品感兴趣，欢迎联系我。</p>
+    <p>Email：misscarkk127@163.com</p>
+    <p>Phone：+86 18180788009</p>
+  </div>
+</footer>
+
+<nav class="project-nav" aria-label="项目导航">
+  <a href="social-listening.html">← 上一个项目</a>
+  <a href="ronghua.html">查看下一个项目 →</a>
+</nav>
+</body>
+</html>
