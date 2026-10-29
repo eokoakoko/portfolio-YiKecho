@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <!-- ① 浏览器标签页上显示的标题，WangYike·Portfolio -->
-<title>绒花 · 影像创作 | 王译可的作品集</title>
+<title>绒花 · 影像创作 | YiKe's Portfolio</title>
 <style>
 /* 主打作品卡片 */
 .featured-work {
@@ -187,28 +187,69 @@
   box-shadow: 0 4px 24px rgba(36, 35, 31, 0.06);
 }
 
+/* =========================================
+   导航栏文字：极致视线对齐版
+   ========================================= */
+
+/* 左侧：回到最初 */
 .nav-brand {
-  color: var(--ink);
-  font-size: 0.9rem;
-  font-weight: 600;
-  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  height: 20px; /* 锁定高度对齐 */
+  
+  color: var(--soft) !important;
+  font-size: 0.8rem;
+  font-weight: 300;
+  letter-spacing: 0.08em;
+  line-height: 1;
+  
+  text-decoration: none !important;
+  transition: color 0.3s ease, transform 0.3s ease;
 }
 
+/* 左侧悬停微动效：变深并微微左移 */
+.nav-brand:hover {
+  color: var(--ink) !important;
+  transform: translateX(-3px);
+}
+
+/* 右侧：链接组外层 */
 .nav-links {
   display: flex;
   align-items: center;
-  gap: 22px;
+  gap: 24px; 
 }
 
+/* 右侧：每个单独的链接 */
 .nav-links a {
-  color: var(--soft);
-  font-size: 0.82rem;
-  text-decoration: none;
-  transition: color 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  height: 20px; /* 和左侧保持同样的高度 */
+  
+  color: var(--soft) !important;
+  font-size: 0.8rem;
+  font-weight: 300;
+  letter-spacing: 0.08em;
+  line-height: 1;
+  
+  text-decoration: none !important; 
+  transition: color 0.3s ease;
 }
 
+/* 右侧悬停反馈 */
 .nav-links a:hover {
-  color: var(--accent);
+  color: var(--ink) !important; 
+  text-decoration: none !important;
+}
+
+/* 如果你 HTML 里的符号被 span 包裹了，保留这个 */
+.nav-links a span {
+  opacity: 0.6;
+  font-size: 0.9rem;
 }
 
 /* 手机屏幕适配 */
@@ -403,18 +444,18 @@ h1 {
 <body>
 
 <nav class="site-nav">
-  <a class="nav-brand" href="#top"></a>
+  <a class="nav-brand" href="portfolio1.html">回到最初</a>
 
   <div class="nav-links">
-    <a href="portfolio1.html#works">作品</a>
-    <a href="portfolio1.html#about">关于</a>
-    <a href="portfolio1.html#contact">联系</a>
-  </div>
+  <a href="#top">顶端</a>
+  <a href="#overview">概述</a>
+  <a href="#contact">联系</a>
+</div>
 </nav>
 
 
 <header id="top">
-  <p class="eyebrow">CASE STUDY · 02 / VIDEO PROJECT</p>
+  <p class="eyebrow">CASE STUDY · 04 / 2025</p>
 
   <h1>绒花</h1>
 
@@ -431,7 +472,7 @@ h1 {
   </div>
 </header>
 
-<section class="project-detail">
+<section id="overview" class="project-detail" style="scroll-margin-top: 100px;">
   <p class="case-label">PROJECT OVERVIEW</p>
   <h2>项目概述</h2>
 
@@ -541,8 +582,7 @@ h1 {
 
   <div class="contact-info">
     <p>如果你对我的作品感兴趣，欢迎联系我。</p>
-    <p>Email：misscarkk127@163.com</p>
-    <p>Phone：+86 18180788009</p>
+    <a href="mailto:misscarkk127@163.com">Mail: misscarkk127@163.com</a>
   </div>
 </footer>
 
@@ -550,6 +590,14 @@ h1 {
   <a href="nanjing.html">← 上一个项目</a>
   <a href="nanjing-guide.html">查看下一个项目 →</a>
 </nav>
+
+<!-- 引入 GSAP (确保每个详情页都有) -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+
+<script src="project-hero-parallax.js"></script>
+<script src="page-transition.js"></script>
 
 </body>
 </html>

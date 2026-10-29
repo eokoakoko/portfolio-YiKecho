@@ -1,0 +1,65 @@
+/* TEST ONLY — cinematic motion layer
+   Keep this file separate from your original stylesheet. */
+:root {
+  --motion-ease: cubic-bezier(.22, 1, .36, 1);
+}
+
+/* Gentle entrance for the first screen */
+.motion-hero .eyebrow,
+.motion-hero h1,
+.motion-hero .intro,
+.motion-hero .hero-meta {
+  opacity: 0;
+  transform: translateY(18px);
+  animation: hero-enter .85s var(--motion-ease) forwards;
+}
+.motion-hero .eyebrow { animation-delay: .08s; }
+.motion-hero h1 { animation-delay: .18s; }
+.motion-hero .intro { animation-delay: .32s; }
+.motion-hero .hero-meta { animation-delay: .46s; }
+
+@keyframes hero-enter {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Scroll reveals are enabled only after JS has initialized */
+.motion-ready .reveal-on-scroll {
+  opacity: 0;
+  transform: translateY(24px);
+  transition:
+    opacity .8s var(--motion-ease),
+    transform .8s var(--motion-ease);
+}
+.motion-ready .reveal-on-scroll.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* More cinematic, restrained hover response */
+.featured-work .work-cover {
+  transform: translateY(0);
+  transition: transform .55s var(--motion-ease), filter .55s ease;
+  will-change: transform;
+}
+@media (hover: hover) and (pointer: fine) {
+  .featured-work:hover .work-cover {
+    transform: translateY(-5px) scale(1.012);
+    filter: saturate(1.06);
+  }
+  .featured-work:hover .cover-title {
+    transform: translateX(5px);
+  }
+}
+.cover-title {
+  transition: transform .55s var(--motion-ease);
+}
+
+/* Navigation and sections stay usable; only refine feedback */
+.site-nav {
+  transition: box-shadow .35s ease, background-color .35s ease;
+}
+.site-nav:hover {
+  box-shadow: 0 8px 30px rgba(36, 35, 31, .09);
+}
+
+/* Avoid hiding content when motion is disabled */

@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <!-- ① 浏览器标签页上显示的标题，WangYike·Portfolio -->
-<title>王译可· 作品集</title>
+<title>WangYike’s Portfolio</title>
 <style>
 /* 主打作品卡片 */
 .featured-work {
@@ -14,6 +14,11 @@
   align-items: center;
   color: inherit;
   text-decoration: none;
+
+ 
+  border-radius: 12px;
+  
+  padding: 2rem;
 }
 
 .work-cover {
@@ -21,7 +26,9 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  min-height: 300px;
+  aspect-ratio: 4 / 3;
+  width: 100%;
+  border-radius: 4px;
   padding: 1.5rem;
   overflow: hidden;
   color: #f7f5f0;
@@ -55,6 +62,11 @@
   align-items: center;
   font-size: .75rem;
   letter-spacing: .08em;
+}
+
+
+.work-info {
+  padding: 1.5rem 0;
 }
 
 .work-info .work-index {
@@ -91,14 +103,33 @@
   font-size: .72rem;
 }
 
+/* 新增：iPad 及小平板端适配 */
+@media (min-width: 601px) and (max-width: 1024px) {
+  .hero-wordmark {
+    /* 平板屏幕上稍微控制一下最大字号，防止太挤 */
+    font-size: min(18.5vw, 32vh); 
+  }
+  
+  .hero-tagline {
+    font-size: 0.75rem;
+    left: 7.9vw; /* iPad 下的对齐微调 */
+  }
+  
+  .letter-y, .letter-k {
+    margin-left: -0.4vw; /* 较小屏幕下的偏移量微调 */
+  }
+}
+
+/* 手机屏幕适配 */
 @media (max-width: 600px) {
   .featured-work {
     grid-template-columns: 1fr;
     gap: 1.2rem;
   }
 
-  .work-cover {
-    min-height: 260px;
+  
+  .work-info {
+    padding: 0; /* 手机上变成上下结构了，就不需要额外上下留白了 */
   }
 }
 
@@ -163,11 +194,12 @@
     font-family: "PingFang SC", "Microsoft YaHei", system-ui, sans-serif;
     line-height: 1.8;
     padding: 0 7vw;
+    overflow-x: hidden; 
   }
 
   header, section, footer { max-width: 1000px; margin: 0 auto; }
 
-/* 玻璃导航栏 */
+/* 玻璃导航栏 - 细长版 */
 .site-nav {
   position: sticky;
   top: 16px;
@@ -177,51 +209,82 @@
   justify-content: space-between;
   max-width: 1000px;
   margin: 0 auto;
-  padding: 12px 18px;
+  
+  
+  padding: 8px 24px; 
 
-  background: rgba(247, 245, 240, 0.72);
-  backdrop-filter: blur(18px) saturate(150%);
-  -webkit-backdrop-filter: blur(18px) saturate(150%);
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
 
-  border: 1px solid rgba(255, 255, 255, 0.75);
+  border: 1px solid rgba(255, 255, 255, 0.3);
   border-radius: 999px;
-  box-shadow: 0 4px 24px rgba(36, 35, 31, 0.06);
+  box-shadow: 0 8px 32px rgba(36, 35, 31, 0.05);
+  
+  transition: background 0.5s ease, border-color 0.5s ease, box-shadow 0.5s ease;
 }
 
+/* 左侧：首屏（回到顶部） */
 .nav-brand {
-  color: var(--ink);
-  font-size: 0.9rem;
-  font-weight: 600;
-  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  height: 20px; 
+  
+  color: var(--soft) !important; 
+  font-size: 0.8rem;
+  font-weight: 300; 
+  letter-spacing: 0.08em;
+  line-height: 1;
+  
+  text-decoration: none !important;
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+/* 悬停：变深，微微向上浮起一点（符合“向上”的语义） */
+.nav-brand:hover {
+  color: var(--ink) !important;
+  transform: translateY(-2px); 
 }
 
 .nav-links {
   display: flex;
   align-items: center;
-  gap: 22px;
+  gap: 28px; /* 间距稍微拉宽一点点 */
 }
 
+/* 导航文字样式：变淡、变细（与详情页统一） */
 .nav-links a {
-  color: var(--soft);
-  font-size: 0.82rem;
-  text-decoration: none;
-  transition: color 0.2s ease;
+  color: var(--soft) !important; /* 换成次要文字色，变淡 */
+  font-size: 0.8rem;
+  font-weight: 300; /* 字重变细，显得极其轻盈 */
+  letter-spacing: 0.08em;
+  
+  text-decoration: none !important; 
+  transition: opacity 0.3s ease, color 0.3s ease;
+  
+  /* 让符号和文字的间距舒服一点 */
+  display: flex;
+  align-items: center;
+  gap: 4px;
 }
 
+/* 悬停时：恢复深邃，产生交互反馈 */
 .nav-links a:hover {
-  color: var(--accent);
+  opacity: 1;
+  color: var(--ink) !important; 
+  text-decoration: none !important;
 }
 
 /* 手机屏幕适配 */
 @media (max-width: 480px) {
   .site-nav {
-    padding: 11px 14px;
+    padding: 8px 16px;
   }
-
   .nav-links {
-    gap: 12px;
+    gap: 16px;
   }
-
   .nav-links a {
     font-size: 0.75rem;
   }
@@ -273,7 +336,17 @@ h1 {
 }
 
 
-  h2 { font-size: 1.3rem; margin-bottom: 1.5rem; }
+    h2 { 
+    font-family: "Songti SC", "Noto Serif SC", serif; 
+    font-size: 1.5rem; 
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    margin-bottom: 1.5rem; 
+  }
+/* 作品专属颜色 */
+#works > h2 {
+  color: #5C5C5C; 
+}
   section { padding: 6vh 0; }
 
   /* ④ 作品网格：自动按屏幕宽度排列，手机上会变成一列 */
@@ -336,6 +409,14 @@ h1 {
   }
 }
 
+/* 遮罩式转场的初始状态 */
+#about {
+  clip-path: inset(100% 0 0 0);
+  will-change: clip-path;
+
+  padding-top: 20vh; 
+  
+}
 /* 关于我：桌面双栏，手机单栏 */
 .about-section {
   display: grid;
@@ -345,8 +426,11 @@ h1 {
 }
 
 .about-heading h2 {
+  font-family: "Songti SC", "Noto Serif SC", serif; 
   margin-bottom: 0.8rem;
   font-size: clamp(2rem, 3.5vw, 3rem);
+  font-weight: 500; 
+  letter-spacing: 0.02em;
   line-height: 1.2;
 }
 
@@ -395,37 +479,236 @@ h1 {
     line-height: 1.9;
   }
 }
+
+/* ================= 首屏最终版 ================= */
+header#top.hero {
+  position: relative;
+  height: 100vh;
+  min-height: 700px;
+  display: flex;
+  flex-direction: column;
+  overflow: visible; /* 允许视差飞出 */
+}
+
+.hero-topline {
+  position: absolute;
+  top: 6rem; 
+  left: 0;
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  color: var(--soft);
+  font-size: 0.65rem;
+  letter-spacing: 0.15em;
+  padding: 0 4vw;
+  z-index: 10;
+}
+
+.hero-stage {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+  width: 100%;
+  padding: 10rem 0 8rem 0; 
+}
+
+.hero-center-wrap {
+  position: relative;
+  width: 100%;
+  margin: 0 auto;
+}
+
+/* --- 英文主标题 --- */
+.hero-wordmark {
+  font-family: "Impact", "Arial Black", sans-serif;
+  font-size: min(19.5vw, 36vh); 
+  font-weight: normal;
+  line-height: 0.8;
+  color: #171715;
+  display: flex;
+  align-items: baseline; 
+  justify-content: space-between; 
+  width: 100%;
+  padding: 0 4vw; 
+  transform: scaleY(1.25); 
+  transform-origin: center center;
+  transform-style: preserve-3d; /* 保护 3D 翻转不被压扁 */
+}
+
+.letter-y, .letter-k {
+  font-size: 1.45em; 
+  cursor: pointer; 
+  -webkit-tap-highlight-color: transparent;
+  display: inline-block;
+  transform: scaleY(1.15); 
+  transform-origin: bottom center; 
+  margin-left: -0.6vw; /* 修复视觉左偏 */
+}
+
+.letter-i, .letter-e, .letter-c, .letter-h, .letter-o {
+  font-size: 1em;
+  display: inline-block;
+  transform: scaleY(1.15); 
+  transform-origin: bottom center;
+}
+
+/* ================= 3D 翻转动画 ================= */
+.flip-letter {
+  display: inline-block;
+  perspective: 900px; 
+  vertical-align: baseline;
+  color: #171715;
+  transition: opacity 0.2s;
+}
+
+.flip-letter:hover { opacity: 0.85; }
+
+.flip-inner {
+  display: inline-grid; 
+  position: relative;
+  transform-style: preserve-3d; 
+  animation: letter-flip 8s cubic-bezier(.65, 0, .35, 1) infinite;
+  animation-play-state: running;
+}
+
+.flip-face {
+  grid-area: 1 / 1; 
+  display: block;
+  backface-visibility: hidden; 
+  -webkit-backface-visibility: hidden;
+}
+
+.flip-front { color: #171715; }
+.flip-back { color: #a44732; transform: rotateY(180deg); }
+
+.letter-k .flip-inner { animation-delay: -3.5s; }
+
+@keyframes letter-flip {
+  0%, 22% { transform: rotateY(0deg); }
+  40%, 62% { transform: rotateY(180deg); }
+  80%, 100% { transform: rotateY(360deg); }
+}
+
+/* --- 底部副标题 --- */
+.hero-tagline {
+  position: absolute;
+  bottom: 3rem;
+  left: 7.7vw; /* 配合 Y 的负边距微调 */
+  display: flex;
+  align-items: baseline;
+  gap: 1.5rem; 
+  color: #484640;
+  font-family: "PingFang SC", "Microsoft YaHei", sans-serif;
+  font-size: clamp(0.65rem, 1vw, 0.85rem);
+  font-weight: 400;
+  letter-spacing: 0.12em; 
+  transform: scaleY(0.95) scaleX(1.02); 
+  transform-origin: left center;
+  white-space: nowrap;
+}
+
+/* ================= 平板端适配 (放在基础样式下方防止被覆盖) ================= */
+@media (min-width: 601px) and (max-width: 1024px) {
+  .hero-wordmark { font-size: min(18.5vw, 32vh); }
+  .hero-tagline { font-size: 0.75rem; left: 7.4vw; }
+  .letter-y, .letter-k { margin-left: -0.4vw; }
+}
+
+/* ================= 手机端适配 ================= */
+@media (max-width: 600px) {
+  header#top.hero { min-height: 80vh; }
+  .hero-topline { top: 5rem; padding: 0 2vw; }
+  .hero-stage { padding: 8rem 0 6rem 0; }
+  
+  .hero-wordmark {
+    font-size: min(19vw, 30vh);
+    padding: 0 2vw;
+    transform: scaleY(1.15); 
+  }
+  
+  .letter-y, .letter-k { margin-left: 0; } /* 手机上不需要负边距 */
+  
+  .hero-tagline {
+    flex-direction: column; 
+    gap: 0.5rem;
+    width: 90vw;
+    font-size: 0.6rem;
+    letter-spacing: 0.1em;
+    transform: scaleY(0.95);
+    white-space: normal; 
+    left: 2vw;
+  }
+}
+
+
+
 </style>
 <link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="motion.css">
+
 </head>
 
+
 <body>
+<div class="transition-bg" aria-hidden="true"></div>
+<div id="dot-matrix-layer" aria-hidden="true"></div>
+
 
 <nav class="site-nav">
-  <a class="nav-brand" href="#top"></a>
+  <a class="nav-brand" href="#top">回到最初</a> 
 
   <div class="nav-links">
     <a href="#works">作品</a>
     <a href="#about">关于</a>
-    <a href="#contact">联系</a>
   </div>
 </nav>
 
 <!-- ⑤ 首屏：一句话说清你是谁、做什么 -->
-<header id="top">
-  <p class="eyebrow">PORTFOLIO · 2026—2027</p>
 
-  <h1>王译可<br>的创作世界.</h1>
+<header id="top" class="hero">
+  <div class="hero-topline">
+    <span>YIKE'S PORTFOLIO</span>
+  </div>
 
-  <p class="intro">
-    播音与主持艺术专业学生，探索影像叙事、声音表达与数字创作。
-    在不同媒介之间寻找表达的可能，让想法成为可以被看见、听见的作品。
-  </p>
+  <div class="hero-stage">
+    <div class="hero-center-wrap">
+      
+      <!-- 主标题排版：加入 tabindex 和 role 便于交互 -->
+      <div class="hero-wordmark" aria-label="YiKecho">
+        <!-- Y 带翻转 -->
+        <span class="flip-letter letter-y" role="button" aria-label="Flip Y">
+          <span class="flip-inner">
+            <span class="flip-face flip-front">Y</span>
+            <span class="flip-face flip-back">Y</span>
+          </span>
+        </span>
+        
+        <span class="letter-i">i</span>
+        
+        <!-- K 带翻转 -->
+        <span class="flip-letter letter-k" role="button" aria-label="Flip K">
+          <span class="flip-inner">
+            <span class="flip-face flip-front">K</span>
+            <span class="flip-face flip-back">K</span>
+          </span>
+        </span>
+        
+        <!-- 拆分 echo -->
+        <span class="letter-e">e</span>
+        <span class="letter-c">c</span>
+        <span class="letter-h">h</span>
+        <span class="letter-o">o</span>
+      </div>
 
-  <div class="hero-meta">
-    <span>VIDEO</span>
-    <span>VOICE</span>
-    <span>CREATIVE TECHNOLOGY</span>
+    </div>
+
+    <!-- 底部副标题：分为左右两块，用 flex 撑开 -->
+    <p class="hero-tagline">
+      <span class="tag-left">Yike的内容回声</span>
+      <span class="tag-right">让想法成为可以被看见 听见的内容</span>
+    </p>
   </div>
 </header>
 
@@ -433,8 +716,11 @@ h1 {
 <!-- ⑥ 作品区：每个 <a class="work"> 是一个作品，复制粘贴就能增加 -->
 
 <section id="works">
-  <h2>精选作品 Selected Work</h2>
+  
+  <h2>作品 Selected Work</h2>
 
+  <div class="works-pin">
+    <div class="works-track">
 
   <a class="featured-work" href="not-alone.html">
       <div class="work-cover cover-not-alone">
@@ -448,22 +734,20 @@ h1 {
 
     <div class="work-info">
       <p class="work-index">01 / SOCIAL MEDIA</p>
-      <h3>Not Alone｜社交媒体内容运营</h3>
-      <p>
-        围绕「魔法学院」系列内容，参与社交媒体选题与文案创作，
-        探索系列化表达如何建立品牌个性，并与受众产生连接。
-      </p>
+ <h3><span class="title-text">Not Alone 社交媒体内容运营</span></h3>
+
+      
       <div class="work-tags">
         <span>内容策划</span>
         <span>社交媒体运营</span>
         <span>文案创作</span>
         <span>系列化内容</span>
       </div>
-      <p style="margin-top: 1.2rem; color: var(--accent);">
-        查看项目详情 ↗
-      </p>
-    </div>
+  </div> 
   </a>
+
+
+ 
 
   <a class="featured-work" href="social-listening.html">
     <div class="work-cover cover-social-listening">
@@ -477,22 +761,19 @@ h1 {
 
     <div class="work-info">
       <p class="work-index">02 / RESEARCH & STRATEGY</p>
-      <h3>Social Listening & Competitive Analysis</h3>
-      <p>
-        从社交媒体信息与竞品表现出发，梳理研究思路与分析流程，
-        将观察转化为内容洞察，为后续策略思考提供依据。
-      </p>
+ <h3><span class="title-text">Social Listening & Competitive Analysis</span></h3>
+      
       <div class="work-tags">
         <span>Social Listening</span>
         <span>竞品分析</span>
         <span>洞察提炼</span>
         <span>Workflow</span>
       </div>
-      <p style="margin-top: 1.2rem; color: var(--accent);">
-        查看项目详情 ↗
-      </p>
     </div>
   </a>
+
+
+  
 
   <a class="featured-work" href="nanjing.html">
     <div class="work-cover cover-nanjing">
@@ -508,27 +789,20 @@ h1 {
 
     <div class="work-info">
       <p class="work-index">03 / FEATURED PROJECT</p>
+<h3><span class="title-text">南京体温</span></h3>
+ 
 
-      <h3>《南京体温》</h3>
-
-      <p>
-        以城市中普通人的生活为切口，
-        从殷巷的零工群体到小西湖的老街居民，
-        用两条叙事线索，讲述一座城市的温度。
-      </p>
-
+      
       <div class="work-tags">
         <span>AI 视频生成</span>
         <span>创意策划</span>
         <span>脚本与分镜</span>
         <span>视频剪辑</span>
       </div>
-
-      <p style="margin-top: 1.2rem; color: var(--accent);">
-        查看项目详情 ↗
-      </p>
     </div>
   </a>
+
+ 
 
 <a class="featured-work" href="ronghua.html">
     <div class="work-cover cover-ronghua">
@@ -542,22 +816,19 @@ h1 {
 
   <div class="work-info">
     <p class="work-index">04 / VIDEO PROJECT</p>
-    <h3>《绒花》</h3>
-    <p>
-      以南京绒花为切口，从此岸取向、关系本位与团体主义三个角度，
-      探索传统手工艺背后的中国文化观念。
-    </p>
+ <h3><span class="title-text">绒花</span></h3>
+
+    
     <div class="work-tags">
       <span>选题策划</span>
       <span>脚本与文案</span>
       <span>拍摄与剪辑</span>
       <span>配音</span>
     </div>
-    <p style="margin-top: 1.2rem; color: var(--accent);">
-      查看项目详情 ↗
-    </p>
   </div>
 </a>
+
+ 
   
 
   <a class="featured-work" href="nanjing-guide.html">
@@ -572,61 +843,96 @@ h1 {
 
     <div class="work-info">
       <p class="work-index">05 / GROUP PROJECT</p>
-      <h3>《场馆解说十六分之一小分队》</h3>
-      <p>
-        以创意情节串联颐和路、大报恩寺与十里秦淮，
-        将真人出镜讲解与 AI 辅助视频表达结合，
-        展现南京的历史文化与城市风貌。
-      </p>
+ <h3><span class="title-text">场馆解说十六分之一小分队</span></h3>
+      
       <div class="work-tags">
         <span>真人出镜</span>
         <span>文案创意</span>
         <span>视频剪辑</span>
         <span>AI 辅助创作</span>
       </div>
-      <p style="margin-top: 1.2rem; color: var(--accent);">
-        查看项目详情 ↗
-      </p>
-    </div>
+  </div>
   </a>
 
-
+    </div>
+  </div>
 </section>
 
 
 <!-- ⑦ 关于我 -->
-<section id="about" class="about-section">
-  <div class="about-heading">
-    <h2>关于我</h2>
-    <p>ABOUT ME · CONTENT &amp; CREATIVE</p>
+
+<!-- ⑦ 关于我 (实验性排版海报) -->
+<section id="about" class="about-poster">
+  
+  <!-- 01. VOICE -->
+  <div class="word-block voice-block">
+    <h2 class="en impact-style voice-text">VOICE</h2>
+    <p class="cn-note">声音表达 · VOICE & EXPRESSION</p>
   </div>
 
-  <div class="about-content">
-    <p>
-      我是一名播音与传播艺术专业的学生，关注内容创作、社交媒体传播与数字技术之间的连接。
-    </p>
-    <p>
-      从社交媒体内容策划、文案撰写与竞品分析，到影像叙事、声音表达和 AI 辅助创作，我尝试在不同的项目中理解内容如何被生产、传播，并与受众建立联系。
-    </p>
-    <p>
-      我希望持续探索创意与策略的结合，将观察转化为洞察，将想法落实为有价值的内容。
-    </p>
+  <!-- 02. CONTENT (向右延展) -->
+  <div class="word-block content-block">
+    <h2 class="en impact-style content-text">CONTENT</h2>
+    <p class="cn-note">内容创作与运营</p>
   </div>
+
+  <!-- 03. AI CREATION (视觉重音) -->
+  <div class="word-block ai-block">
+    <h2 class="en impact-style">
+      <span class="ai-red">AI</span> <span class="creation-text">CREATION</span>
+    </h2>
+    <p class="cn-note">AI 创作 · CREATIVE TECHNOLOGY</p>
+  </div>
+
+  <!-- 04. SYNTHESIS (字距拉长) -->
+  <div class="word-block synthesis-block">
+    <h2 class="en impact-style synthesis-text">SYNTHESIS</h2>
+    <p class="cn-note">信息整合 清晰表达</p>
+  </div>
+
+    <!-- 05. EXPERIMENT (靠右上) -->
+  <div class="word-block experiment-block">
+    <h2 class="en impact-style">
+      <span class="ex-left">EXPERI</span><span class="ex-right">MENT</span>
+    </h2>
+    <p class="cn-note">探索与实验</p>
+  </div>
+
+  <!-- 06. EXECUTION & CONTACT (左右底端分栏) -->
+  <div class="execution-row">
+    
+    <!-- 左边：EXECUTION -->
+    <div class="word-block execution-block">
+      <h2 class="en impact-style execution-text">EXECUTION</h2>
+      <p class="cn-note">创意落地 · FROM IDEA TO OUTPUT</p>
+    </div>
+
+    <!-- 右边：LET'S CONNECT -->
+    <div class="about-footer-connect">
+      <h2 class="en impact-style connect-title">LET'S CONNECT</h2>
+      <a href="mailto:misscarkk127@163.com" class="connect-email">misscarkk127@163.com</a>
+    </div>
+
+  </div>
+
 </section>
+    
 
-<!-- ⑧ 联系方式：把邮箱换成你的 -->
 
-<footer id="contact">
-  <p class="eyebrow">GET IN TOUCH</p>
-  <h2>期待与你交流。</h2>
 
-  <div class="contact-info">
-    <p>如果你对我的作品感兴趣，欢迎联系我。</p>
-    <p>Email：misscarkk127@163.com</p>
-    <p>Phone：+86 18180788009</p>
-  </div>
-</footer>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="horizontal-scroll.js"></script>
+<script src="motion.js"></script>
+<script src="nav.js"></script>
+<script src="flip-interaction.js"></script>
+<script src="parallax.js"></script>
+<script src="dot-matrix.js"></script>
+<script src="card-hover.js"></script>
+<script src="title-fit.js"></script>
+<script src="about-rise.js"></script>
+<script src="page-transition.js"></script>
+<script src="dot-matrix-mobile.js"></script>
 
 </body>
 </html>

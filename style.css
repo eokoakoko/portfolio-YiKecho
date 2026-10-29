@@ -108,90 +108,485 @@ img:hover {
 }
 
 
-/* 01 — Not Alone：酒红过渡到深蓝 */
-.cover-not-alone {
-  background:
-    radial-gradient(
-      ellipse at 18% 28%,
-      rgba(164, 78, 91, 0.58),
-      transparent 48%
-    ),
-    linear-gradient(
-      115deg,
-      #7f414d 0%,
-      #493b50 28%,
-      #29485e 65%,
-      #60788a 100%
-    );
+
+
+/* ==================================
+   GSAP — Horizontal Works Rail
+   Desktop: vertical scroll drives horizontal movement
+   Mobile: native horizontal touch scrolling
+   ================================== */
+
+#works {
+  width: 100vw;
+  max-width: none;
+  margin-left: -7vw;
+  padding-left: 7vw;
+  padding-right: 7vw;
+  box-sizing: border-box;
+}
+
+.works-pin {
+  position: relative;
+  width: 100%;
+  padding: 8vh 0; 
+  overflow-x: hidden; 
+  overflow-y: visible; 
+}
+
+.works-track {
+  display: flex;
+  align-items: center; 
+  gap: clamp(1.5rem, 4vw, 4rem);
+  width: max-content;
+  will-change: transform;
+}
+
+/* ==================================
+   银行卡尺寸的实体卡片
+   ================================== */
+
+.works-track > .featured-work {
+  flex: 0 0 clamp(300px, 40vw, 520px);
+  width: clamp(300px, 40vw, 520px);
+  aspect-ratio: 1.6 / 1; 
+  min-width: 0;
+  padding: 2rem; 
+  
+  background: #3b2d24 !important; 
+  color: #f7f5f0 !important;
+  
+  border: 1px solid rgba(164, 71, 50, 0.3) !important; 
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15) !important; 
+  border-radius: 12px; 
+  
+  display: flex;
+  flex-direction: column;
+  position: relative; /* 必须要有，作为参考系 */
+  overflow: hidden;
+}
+
+/* 内部容器填满 */
+.works-track > .featured-work .work-info {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  padding: 0 !important;
+}
+
+/* 1. 左上角序号：死死钉在左上角 */
+.works-track > .featured-work .work-index {
+  position: absolute;
+  top: 0;
+  left: 0;
+  color: #a44732 !important;
+  font-size: 0.8rem;
+  letter-spacing: 0.1em;
+  margin: 0;
+}
+
+/* 2. 右下角标签：死死钉在右下角 */
+.works-track > .featured-work .work-tags {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 0.4rem; 
+  margin: 0;
+}
+
+.works-track > .featured-work .work-tags span {
+  border: 1px solid #a44732 !important;
+  color: #a44732 !important;
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.7rem; 
+  white-space: nowrap;
+}
+
+/* 3. 中间标题容器 */
+.works-track > .featured-work h3 {
+  position: absolute;
+  inset: 3.5rem 10%; /* 留出上下左右的安全区 */
+  display: flex;
+  justify-content: center; 
+  align-items: center;     
+  margin: 0;
+}
+
+/* 4. 内部文字变形 */
+.works-track > .featured-work h3 .title-text {
+  display: block;
+  white-space: nowrap; 
+  color: #f7f5f0 !important; 
+  font-family: "Songti SC", "Noto Serif SC", serif; 
+  font-weight: 800; 
+  font-size: 2.8rem; 
+  transform-origin: center center; 
+}
+
+/* 隐藏原来的渐变封面块 */
+.works-track > .featured-work .work-cover {
+  display: none !important; 
 }
 
 
-/* 02 — Social Listening：雾霾蓝过渡到灰紫 */
-.cover-social-listening {
-  background:
-    radial-gradient(
-      ellipse at 82% 28%,
-      rgba(204, 177, 218, 0.52),
-      transparent 48%
-    ),
-    linear-gradient(
-      115deg,
-      #60788a 0%,
-      #77758f 48%,
-      #a18cae 100%
-    );
+#dot-matrix-layer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh; /* 核心修复：强制锁定满屏高度，解决 Safari 首次加载变矮的问题 */
+  z-index: 0; 
+  pointer-events: none;
+  display: grid;
+  grid-template-columns: repeat(12, 1fr); 
+  place-items: center;
+  overflow: hidden;
 }
 
-/* 03 — 南京体温：明黄到琥珀金 */
-.cover-nanjing {
-  background:
-    radial-gradient(
-      ellipse at 78% 28%,
-      rgba(255, 242, 178, 0.72),
-      transparent 48%
-    ),
-    linear-gradient(
-      115deg,
-      #a18cae 0%,
-      #d5b75d 42%,
-      #e9c75c 72%,
-      #c99b43 100%
-    );
+.dot {
+  width: clamp(6px, 1vw, 12px);
+  height: clamp(6px, 1vw, 12px);
+  border-radius: 50%;
+  background-color: #a44732; /* 砖红色 */
+  opacity: 0; /* 初始隐藏 */
+  transform: scale(0);
+  will-change: transform, opacity;
+}
+
+/* 首页文字内容位于波点层之上 */
+header, section, footer {
+  position: relative;
+  z-index: 1;
+}
+
+/* Mobile: do not pin; let the user swipe the cards naturally */
+@media (max-width: 800px) {
+  
+ #dot-matrix-layer {
+  display: grid !important;
+  grid-template-columns: repeat(8, 1fr);
+}
+
+#dot-matrix-layer .dot {
+  width: 6px;
+  height: 6px;
+}
+
+  #works {
+    width: auto;
+    max-width: 1000px;
+    margin-left: 0;
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .works-pin {
+    overflow-x: auto;
+    overflow-y: hidden;
+    overscroll-behavior-x: contain;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+    scroll-snap-type: x proximity;
+  }
+
+  .works-track {
+    width: max-content;
+    padding-bottom: 1rem;
+    transform: none !important;
+    will-change: auto;
+  }
+
+  .works-track > .featured-work {
+    flex: 0 0 85vw;
+    width: 85vw;
+    scroll-snap-align: start;
+  }
 }
 
 
-/* 04 — 绒花：琥珀金过渡到酒红 */
-.cover-ronghua {
-  background:
-    radial-gradient(
-      ellipse at 78% 28%,
-      rgba(219, 145, 151, 0.45),
-      transparent 48%
-    ),
-    linear-gradient(
-      115deg,
-      #c99b43 0%,
-      #99515a 42%,
-      #713843 72%,
-      #7f414d 100%
-    );
+/* Contact footer: responsive two-column layout */
+#contact .contact-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 24px;
+  flex-wrap: wrap;
+  width: 100%;
+  box-sizing: border-box;
 }
 
-
-/* 05 — 漫游金陵：酒红过渡到灰调青绿 */
-.cover-jinling {
-  background:
-    radial-gradient(
-      ellipse at 78% 28%,
-      rgba(196, 205, 174, 0.42),
-      transparent 48%
-    ),
-    linear-gradient(
-      115deg,
-      #7f414d 0%,
-      #777d70 42%,
-      #8f9a86 72%,
-      #a7ad9b 100%
-    );
+#contact .contact-info p {
+  margin: 0;
 }
 
+#contact .contact-info a {
+  color: inherit;
+  text-decoration: none;
+  overflow-wrap: anywhere;
+  transition: opacity 0.25s ease;
+}
+
+#contact .contact-info a:hover {
+  opacity: 0.65;
+}
+
+@media (max-width: 600px) {
+  #contact .contact-info {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+}
+
+/* ==================================
+   关于我 - 实验性排版海报
+   ================================== */
+.about-poster {
+  position: relative;
+  width: 100vw;
+  max-width: 100%;
+  margin-left: -7vw; /* 抵消 body padding */
+  padding: 15vh 7vw; /* 上下留白 */
+  background: transparent;
+  clip-path: none !important;
+  display: flex;
+  flex-direction: column;
+  gap: 15vh; /* 每个词块之间的巨大间距，撑开滚动空间 */
+  overflow: visible;
+}
+
+/* 基础字体设定 */
+.about-poster .impact-style {
+  font-family: "Impact", "Arial Black", sans-serif;
+  font-weight: normal;
+  color: #171715;
+  line-height: 0.9;
+  letter-spacing: -0.02em;
+  margin: 0;
+  /* 统一的基础拉伸感 */
+  transform: scaleY(1.1);
+  transform-origin: bottom left;
+}
+
+/* 中文注释 */
+.about-poster .cn-note {
+  font-family: "PingFang SC", "Microsoft YaHei", sans-serif;
+  font-size: clamp(0.8rem, 1vw, 1rem);
+  color: #77736b;
+  letter-spacing: 0.1em;
+  margin-top: 1rem;
+}
+
+/* 各词块的位置与大小 */
+.word-block {
+  position: relative;
+  width: 100%;
+}
+
+/* 01. VOICE：最大，靠左 */
+.voice-block {
+  align-self: flex-start;
+}
+.voice-text {
+  font-size: clamp(6rem, 16vw, 18rem);
+  /* 模糊和透明由 JS 控制 */
+}
+.voice-block .cn-note {
+  margin-left: 1vw; /* 轻微错位 */
+}
+
+/* 02. CONTENT：向右延展 */
+.content-block {
+  align-self: flex-end; /* 靠右 */
+  text-align: right;
+  margin-top: -5vh;
+}
+.content-text {
+  font-size: clamp(4rem, 10vw, 11rem);
+}
+.content-block .cn-note {
+  text-align: right;
+}
+
+/* 03. AI CREATION：靠左，红色 */
+.ai-block {
+  align-self: flex-start;
+  margin-top: 5vh;
+}
+.ai-block .en {
+  font-size: clamp(4rem, 9vw, 9rem);
+}
+.ai-red {
+  color: var(--accent); /* 铁锈红 */
+}
+.creation-text {
+  font-size: 0.7em; /* CREATION 略小 */
+  font-weight: 500;
+}
+
+/* 04. SYNTHESIS：长而轻，靠中间 */
+.synthesis-block {
+  align-self: center;
+  text-align: center;
+  margin-top: 5vh;
+}
+.synthesis-text {
+  font-size: clamp(2.5rem, 6vw, 6rem);
+  font-weight: 500;
+  letter-spacing: 0.2em; /* 初始拉开，由 JS 收拢 */
+  transform: scaleY(1);
+}
+
+/* 05. EXPERIMENT：偏右 */
+.experiment-block {
+  align-self: flex-end;
+  margin-top: 5vh;
+  text-align: right;
+}
+.experiment-block .en {
+  font-size: clamp(3rem, 8vw, 8rem);
+  display: flex;
+  justify-content: flex-end;
+}
+.experiment-block .cn-note {
+  color: var(--accent); /* 红色注释 */
+}
+
+/* ==================================
+   最后一组：打破网格的右下巨物
+   ================================== */
+
+/* 1. 相对定位容器：给大显身手留出空间 */
+.execution-row {
+  position: relative;
+  width: 100%;
+  /* 必须给一个足够的高度，让这两个绝对定位的元素有地方放 */
+  min-height: 60vh; 
+  margin-top: 5vh;
+  margin-bottom: 5vh;
+}
+
+/* 2. 左侧：EXECUTION (绝对定位在左边，不用管右边) */
+.execution-block {
+  position: absolute;
+  left: 0; 
+  top: 20%; /* 稍微往下放一点，不要顶在最上面 */
+  text-align: left;
+  margin: 0;
+}
+.execution-text {
+  font-size: clamp(2.5rem, 5vw, 6rem); 
+  font-weight: 500;
+  letter-spacing: 0.1em;
+}
+
+/* 3. 右侧容器：绝对定位在右下角 */
+.about-footer-connect {
+  position: absolute;
+  bottom: 0;
+  /* 核心魔法：向右侧硬推！负数让它突破容器边界，冲向屏幕边缘 */
+  right: -12vw; 
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end; 
+  text-align: right;
+}
+
+/* 4. 核心：疯狂的巨物 LET'S CONNECT */
+.connect-title {
+  /* 字号直接拉到极其夸张的程度 */
+  font-size: clamp(5rem, 9vw, 11rem); 
+  margin-bottom: 1rem;
+  line-height: 0.65; /* 狠狠压缩行高 */
+  white-space: nowrap; 
+  
+  /* 极度纵向拉高，横向微压 */
+  transform: scaleY(2.3) scaleX(0.9);
+  /* 关键：锁定右下角作为变形原点，保证变形后右侧绝对齐平 */
+  transform-origin: bottom right; 
+}
+
+/* 5. 邮箱：紧跟其后，同样右对齐 */
+.about-footer-connect .connect-email {
+  font-family: "Impact", "Arial Black", sans-serif;
+  font-size: clamp(1.4rem, 2vw, 1.8rem); 
+  color: #171717; 
+  text-decoration: none;
+  letter-spacing: 0.05em;
+  display: inline-block; 
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.about-footer-connect .connect-email:hover,
+.about-footer-connect .connect-email:active {
+  color: var(--accent); 
+  transform: translateY(-2px);
+}
+
+/* 手机端强制重置，防止冲出屏幕 */
+@media (max-width: 800px) {
+  .execution-row {
+    min-height: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 4rem;
+  }
+  .execution-block, 
+  .about-footer-connect {
+    position: relative;
+    right: auto;
+    left: auto;
+    top: auto;
+    bottom: auto;
+  }
+  .about-footer-connect {
+    align-items: flex-start;
+    text-align: left;
+  }
+  .connect-title {
+    font-size: clamp(2rem, 12vw, 5rem);
+    transform-origin: bottom left;
+  }
+}
+
+/* 手机端对称变上下堆叠时的位置重置 */
+@media (max-width: 800px) {
+  .execution-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4rem;
+  }
+  .about-footer-connect {
+    align-items: flex-start;
+    text-align: left;
+    top: 0; /* 手机端不需要下压 */
+  }
+}
+
+/* ==================================
+   详情页视差增强
+   ================================== */
+
+/* 1. 图片视差容器：限制溢出并稍微增加高度，给图片滚动留空间 */
+.parallax-img-wrap {
+  overflow: hidden;
+  position: relative;
+  border-radius: 6px; /* 保持你原有的圆角 */
+}
+
+.parallax-img-wrap img {
+  /* 关键：让图片比容器大一点，这样移动时边缘不会漏出底色 */
+  height: 115%; 
+  position: relative;
+  top: -7.5%; 
+  width: 100%;
+  object-fit: cover;
+  will-change: transform;
+}
+
+/* 2. 首屏标题的初始透明度，防止加载时闪现 */
+header h1, header .intro, header .hero-meta {
+  will-change: transform, opacity;
+}
